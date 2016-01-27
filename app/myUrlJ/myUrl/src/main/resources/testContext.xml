@@ -44,7 +44,7 @@
            
       <!-- Session factory object which might need to be accessed from the source code -->
     <bean id="sessionFactory" factory-bean="entityManagerFactory" factory-method="getSessionFactory" />
-    
+   
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
      <!-- To implement transactions -->

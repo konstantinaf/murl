@@ -14,7 +14,38 @@
 			<id>spring-milestones</id>
 			<url>http://repo.springsource.org/libs-milestone/</url>
 		</repository>
+		<repository>
+			<id>atlassian-public</id>
+			<url>https://m2proxy.atlassian.com/repository/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+		</repository>
+		<repository>
+            <id>oauth</id>
+            <url>http://oauth.googlecode.com/svn/code/maven/</url>
+        </repository>
 	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>atlassian-public</id>
+			<url>https://m2proxy.atlassian.com/repository/public</url>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<checksumPolicy>warn</checksumPolicy>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencies>
 		<!-- Spring Framework: General -->
 		<dependency>
@@ -27,14 +58,34 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
+ <dependency>
+            <groupId>net.oauth.core</groupId>
+            <artifactId>oauth</artifactId>
+            <version>20100527</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>net.oauth.core</groupId>
+            <artifactId>oauth-consumer</artifactId>
+            <version>20100527</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>net.oauth.core</groupId>
+            <artifactId>oauth-httpclient4</artifactId>
+            <version>20090913</version>
+        </dependency>
 		<!-- Spring Framework: Object Relational Mapping -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
+<dependency>
+			<groupId>com.atlassian.jira</groupId>
+			<artifactId>jira-rest-java-client-core</artifactId>
+			<version>2.0.0-m31</version>
+		</dependency>
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -132,7 +183,16 @@
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
+<dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.2</version>
+        </dependency>
 		<!-- Spring security test dependency -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>

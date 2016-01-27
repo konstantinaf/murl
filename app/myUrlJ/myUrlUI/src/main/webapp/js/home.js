@@ -12,11 +12,9 @@ $(document).ready(function() {
 			return;
 		}
 		$.ajax({
-			url: '/myUrlRest/api/url/saveUrl/', 
+			url: '/myUrlRest/api/url/requestToken/', 
 			type: "post",
-			data: JSON.stringify({
-                url: url
-            }),
+			data: JSON.stringify({url: url}),
 			dataType: 'json',
             contentType: 'application/json',
 			beforeSend: function(){
@@ -27,8 +25,19 @@ $(document).ready(function() {
 				if(!jsonRes.error){
 					linkJQ.val("");
 				}
+				if (jsonRes.error) {
+					showServerMessage(jsonRes.error, jsonRes.error_code, jsonRes.data, url);
+				}
 				console.log(jsonRes);
-				showServerMessage(jsonRes.error, jsonRes.error_code, jsonRes.data, url);
+				
+				// Store
+				localStorage.setItem("url", url);
+				localStorage.setItem("token", jsonRes.data.token);
+				localStorage.setItem("token_secret", jsonRes.data.tokenSecret);
+				localStorage.setItem("redirect_url", jsonRes.data.redirectUrl);
+				
+				//showServerMessage(jsonRes.error, jsonRes.error_code, jsonRes.data, url);
+				window.location.href = jsonRes.data.redirectUrl;
 			},
 			complete: function(){
 				shortBtnJQ.button("reset");
@@ -38,6 +47,41 @@ $(document).ready(function() {
 		});
 		
 	});
+	
+	if(re_vercode.test(window.location.href)) {
+		var url, current_location, token, token_secret, redirect_url;
+		
+		current_location = window.location.href;
+		
+		url = localStorage.getItem("url");
+		token = localStorage.getItem("token");
+		token_secret = localStorage.getItem("token_secret");
+		redirect_url = localStorage.getItem("redirect_url");
+		
+		if (current_location) {
+			verification_code = current_location.split(re_vercode)[1];
+			
+			$.ajax({
+				url: '/myUrlRest/api/url/accessToken/', 
+				type: "post",
+				data: JSON.stringify({url: url, token : token, tokenSecret : token_secret, verificationCode: verification_code}),
+				dataType: 'json',
+		        contentType: 'application/json',
+				success: function(jsonRes){
+					if (jsonRes.error) {
+						showServerMessage(jsonRes.error, jsonRes.error_code, jsonRes.data, url);
+					}
+					console.log(jsonRes);
+					
+					var projects = jsonRes.data;
+					
+					localStorage.setItem("projects", JSON.stringify(projects));
+					
+					window.location.href = REDIRECT_URL;
+				}
+			});
+		}
+	}
 	
 	$("#link_input").keypress(function(){
 		clearUrlErrors();
@@ -111,18 +155,9 @@ var ERROR = {};
 	ERROR.SERVER = {};
 	ERROR.SERVER.DUPLICATE_URL = {};
 	ERROR.SERVER.DUPLICATE_URL = "E_BUILDING_DUPLICATE_URL";
-var DEFAULT_LINK = "http://localhost:8080/myUrlUI/r/";
-	
+var REDIRECT_URL = "/myUrlUI/r/";
 
+var re_current_url = new RegExp("oauth_token");
+var re_vercode = new RegExp("oauth_verifier=");
 var re_weburl = new RegExp(
-		"^" + "(?:(?:https?|http)://)?"
-		+ "(?:" + "(?!(?:10|127)(?:\\.\\d{1,3}){3})"
-		+ "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})"
-		+ "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})"
-		+ "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])"
-		+ "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}"
-		+ "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" + "|"
-		+ "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)"
-		+ "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*"
-		+ "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" + ")" + "(?::\\d{2,5})?"
-		+ "(?:/\\S*)?" + "$", "i");
+		"^" + "((https?|ftp)\:\/\/)?([a-z0-9-.]*)([a-z]{2,4})(\:[0-9]{2,5})?");

@@ -2,18 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="icon" type="image/png" href="images/favicon.png">
-		<title>Jira Reports!</title>
+		<link rel="icon" type="image/png" href="../../images/favicon.png">
+		<title>Jira Projects. Bug Reports!</title>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 		<script type="text/javascript"	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/home.js"></script>
+		<script type="text/javascript" src="../../js/bugs.js"></script>
 	</head>
-	<body> 
+	<body>
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -23,31 +23,20 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="home">Reporting Portal</a>
-				</div>
-				<div class="collapse navbar-collapse"
-					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li><a href="home">Home</a></li>
-					</ul>
+					<a class="navbar-brand" href="">Bugs</a>
+					<a class="navbar-brand" href="#">Charts</a>
 				</div>
 			</div>
 		</nav>
 		<div class="container-fluid">
 		  <div class="row">
 		    <div class="jumbotron">
-			  <h1><label for="link_input">Enter your JIRA link:</label></h1>
-			  <p>
-			 	  <div class="form-group">
-				    <input type="text" class="form-control" id="link_input" placeholder="Your link">
-				  </div>
-			  </p>
-			  <p id="urlerrorcontainer"></p>
-			  <p><button type="button" id="shorturl_btn" data-loading-text="Loading..." class="btn btn-primary btn-lg" >Get projects!</button></p>
-			  <p id="servermessagescontainer"></p>
+			  <h1>See below bugs reported...</h1>
+			  <p id="messagescontainer"></p>
+			</div>
+			<div id="bugs_list">
 			</div>
 		  </div>
 		</div>
-		
 	</body>
 </html>
