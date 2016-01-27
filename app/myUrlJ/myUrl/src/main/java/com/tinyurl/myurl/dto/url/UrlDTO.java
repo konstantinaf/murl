@@ -1,10 +1,8 @@
 package com.tinyurl.myurl.dto.url;
 
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.tinyurl.myurl.model.url.ShortenToken;
 import com.tinyurl.myurl.model.url.Url;
 
 /*data transfer object*/
@@ -65,28 +63,10 @@ public class UrlDTO {
             dto.setUrl(url.getUrl());
             dto.setCreated(url.getCreated());
             dto.setModified(url.getModified());
-            
-            if (url.getToken()!=null) {
-                dto.setTokens(mapTokens(url.getToken()));
-            }
         }
 
         return dto;
     }
 
-    private static List<Long> mapTokens(List<ShortenToken> tokens) {
-        if (tokens == null) {
-            return new ArrayList<Long>();
-        }
-
-        int n = tokens.size();
-        List<Long> result =  new ArrayList<Long>();
-
-        for (int i = 0; i < n; i++) {
-            result.add(tokens.get(i).getId());
-        }
-
-        return result;
-    }
 
 }

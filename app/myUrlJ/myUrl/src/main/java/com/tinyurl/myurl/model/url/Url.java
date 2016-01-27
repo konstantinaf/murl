@@ -2,11 +2,9 @@ package com.tinyurl.myurl.model.url;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -30,10 +28,7 @@ public class Url extends BaseEntity{
     @Column(nullable=false, name ="url")
     @NotEmpty
     String url;
-    
-    @OneToMany(fetch = javax.persistence.FetchType.LAZY,  mappedBy = "url")
-    List<ShortenToken> token;
-    
+   
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
     private Date created;
@@ -57,14 +52,6 @@ public class Url extends BaseEntity{
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public List<ShortenToken> getToken() {
-        return token;
-    }
-
-    public void setToken(List<ShortenToken> token) {
-        this.token = token;
     }
 
     public Date getCreated() {

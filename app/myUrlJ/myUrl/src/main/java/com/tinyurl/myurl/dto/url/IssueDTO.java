@@ -28,7 +28,6 @@ import com.atlassian.jira.rest.client.api.domain.User;
 import com.atlassian.jira.rest.client.api.domain.Version;
 import com.atlassian.jira.rest.client.api.domain.Worklog;
 import com.atlassian.util.concurrent.Nullable;
-import com.tinyurl.myurl.model.url.Project;
 
 public class IssueDTO implements Serializable {
 	
@@ -259,14 +258,8 @@ public class IssueDTO implements Serializable {
 	public static IssueDTO map(Issue issue) {
 		IssueDTO dto = new IssueDTO();
 
-		if (project != null) {
-			dto.setExpand(project.getExpand());
-			dto.setSelf(project.getSelf());
-			dto.setId(project.getId());
-			dto.setKey(project.getKey());
-			dto.setName(project.getName());
-			dto.setAvatarUrls(project.getAvatarUrls());
-			dto.setProjectTypeKey(project.getProjectTypeKey());
+		if (issue != null) {
+			//to do map issue
 		}
 
 		return dto;
